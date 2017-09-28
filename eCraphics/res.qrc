@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="MAIN_ICO">MainICO.png</file>
+        <file alias="SAVE_ICO">SaveGraphic.png</file>
+        <file alias="SAVE_ICO2">SaveGraphic2.png</file>
+        <file alias="PERIOD_ICO">Period.png</file>
+        <file alias="CRYTERIA_ICO">Cryteria.png</file>
+        <file alias="BASES_ICO">Bases.png</file>
+        <file alias="OPERATORS_ICO">Operators.png</file>
+        <file alias="PROJECT_ICO">Project.png</file>
+        <file alias="CLOSE_ICO">Close.png</file>
+        <file alias="SETTINGS_ICO">Settings.png</file>
+        <file alias="UPDATELIST_ICO">UpdateList.png</file>
+        <file alias="THEME_BLUECERULEAN_IMG">ThemeImg/THEME_BLUECERULEAN_IMG.png</file>
+        <file alias="THEME_BROWNSAND_IMG">ThemeImg/THEME_BROWNSAND_IMG.png</file>
+        <file alias="THEME_BLUEICY_IMG">ThemeImg/THEME_BLUEICY_IMG.png</file>
+        <file alias="THEME_BLUENCS_IMG">ThemeImg/THEME_BLUENCS_IMG.png</file>
+		
+		<file alias="THEME_DARK_IMG">ThemeImg/THEME_DARK_IMG.png</file>
+        <file alias="THEME_HIGHTCONTRAST_IMG">ThemeImg/THEME_HIGHTCONTRAST_IMG.png</file>
+        <file alias="THEME_LIGHT_IMG">ThemeImg/THEME_LIGHT_IMG.png</file>
+        <file alias="THEME_QT_IMG">ThemeImg/THEME_QT_IMG.png</file>
+    </qresource>
+</RCC>
