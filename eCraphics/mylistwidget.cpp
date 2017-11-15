@@ -95,6 +95,9 @@ void MyListWidget::ShowListEmpty(QString animation, int loopCount)
     if(this->movieBackground != nullptr)
         delete this->movieBackground;
 
+    QImage img(animation);
+    picProportional = static_cast<float>(img.height()) / static_cast<float>(img.width());
+
     this->movieBackground = new QLabel(this);
     this->movieBackground->setGeometry(1, 1, this->width() - 2, this->height() -2);
     this->movieBackground->setAlignment(Qt::AlignCenter);
@@ -103,9 +106,10 @@ void MyListWidget::ShowListEmpty(QString animation, int loopCount)
     movie->setFileName(animation);
 
     if(this->movieBackground->height() > this->movieBackground->width())
-        this->movie->setScaledSize(QSize(this->movieBackground->width(), this->movieBackground->width()));
+        this->movie->setScaledSize(QSize(this->movieBackground->width() * picProportional, this->movieBackground->width()));
     else
-        this->movie->setScaledSize(QSize(this->movieBackground->height(), this->movieBackground->height()));
+        this->movie->setScaledSize(QSize(this->movieBackground->height(), this->movieBackground->height() * picProportional));
+
 
     this->movieBackground->setMovie(this->movie);
     this->movieBackground->show();
@@ -204,9 +208,9 @@ void MyListWidget::resizeEvent(QResizeEvent *event)
         this->movieBackground->setGeometry(1, 1, this->width() - 2, this->height() -2);
 
         if(this->movieBackground->height() > this->movieBackground->width())
-            this->movie->setScaledSize(QSize(this->movieBackground->width(), this->movieBackground->width()));
+            this->movie->setScaledSize(QSize(this->movieBackground->width() * picProportional, this->movieBackground->width()));
         else
-            this->movie->setScaledSize(QSize(this->movieBackground->height(), this->movieBackground->height()));
+            this->movie->setScaledSize(QSize(this->movieBackground->height(), this->movieBackground->height() * picProportional));
 
         if(this->movie->state() != QMovie::Running)
         {

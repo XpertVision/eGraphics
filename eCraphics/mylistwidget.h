@@ -11,7 +11,8 @@ private:
     QLabel* movieBackground = nullptr;
     QColor defaultDisbledColor;
 
-    int loopingCount = -1;
+    int loopingCount;
+    float picProportional = 1;
 
     void resizeEvent(QResizeEvent* event);
     void SetupAnimationLoop(int);

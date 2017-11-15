@@ -193,7 +193,7 @@ void MainWnd::SelectProject()
             if(db->queryResult.count() == 0)
             {
                 ui->BaseList->setDisabled(true);
-                ui->BaseList->ShowListEmpty(":/EMPTY_ANIM", 3);
+                ui->BaseList->ShowListEmpty(":/EMPTY_ICON", 0);
 
                 return;
             }
@@ -249,7 +249,10 @@ void MainWnd::SelectOperator()
     uiBlockQuery.Start();
 
     if(db->queryResult.count() == 0)
+    {
+        ui->OperatorList->ShowListEmpty(":/EMPTY_ICON", 0);
         return;
+    }
 
     queryResult = db->queryResult;
     queryResult.insert(0, "Виділити усі");
