@@ -28,18 +28,21 @@ private:
     Ui::MainWnd *ui;
 
     //VARIABLES
-    //
     DB *db = nullptr;
-    //MyChart *pChart = nullptr;
+
     MyChartBase *pChart = nullptr;
 
     MyXmlParser myXml;
 
     MyUpdater updater;
-    //
+
     QString project;
     QString dbTable;
     QString projectType;
+    QString dbCryteria;
+    QString dbCryteriaCast;
+    QString dbCryteriaType;
+    QVector<CryteriaData> cryteria;
 
     QStringList projects;
     QStringList bases;
@@ -56,7 +59,7 @@ private:
     //
     int dayDiff;
     int sceneLen;
-    //QVector<float> minMaxRange;
+
     QVector<XmlProject>* parsedXmlProject;
 
 private slots:
@@ -64,12 +67,12 @@ private slots:
     void SelectProject();
     void SelectOperator();
     void SelectParam();
-    void CheckedList(QListWidgetItem*);
     void ButtonCheckedParam();
     void DrawGraphic();
     void SaveGraphic();
 
     void OpenSettings();
+    void OpenChangeList();
 };
 
 #endif // MAINWND_H

@@ -47,11 +47,21 @@
    <layout class="QHBoxLayout" name="horizontalLayout_5">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="spacing">
+       <number>6</number>
+      </property>
       <item>
-       <widget class="QGraphicsView" name="graphicsView"/>
+       <widget class="QGraphicsView" name="graphicsView">
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+       </widget>
       </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>6</number>
+        </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_11">
           <item>
@@ -101,7 +111,7 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>203</width>
+            <width>207</width>
             <height>25</height>
            </size>
           </property>
@@ -116,6 +126,12 @@
           </property>
           <property name="editable">
            <bool>false</bool>
+          </property>
+          <property name="maxVisibleItems">
+           <number>15</number>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
           </property>
           <property name="modelColumn">
            <number>0</number>
@@ -159,7 +175,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QListWidget" name="BaseList">
+         <widget class="MyListWidget" name="BaseList" native="true">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -171,13 +187,13 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>207</width>
+            <height>100</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>203</width>
+            <width>207</width>
             <height>250</height>
            </size>
           </property>
@@ -236,7 +252,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QListWidget" name="OperatorList">
+         <widget class="MyListWidget" name="OperatorList" native="true">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -248,13 +264,13 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>207</width>
+            <height>100</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>203</width>
+            <width>207</width>
             <height>250</height>
            </size>
           </property>
@@ -325,18 +341,24 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>203</width>
+            <width>207</width>
             <height>25</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>203</width>
+            <width>207</width>
             <height>120</height>
            </size>
           </property>
           <property name="accessibleName">
            <string>ParamCombo</string>
+          </property>
+          <property name="maxVisibleItems">
+           <number>15</number>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
           </property>
           <property name="modelColumn">
            <number>0</number>
@@ -344,7 +366,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QListWidget" name="ParamList">
+         <widget class="MyListWidget" name="ParamList" native="true">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -356,13 +378,13 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>207</width>
+            <height>100</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>203</width>
+            <width>207</width>
             <height>250</height>
            </size>
           </property>
@@ -520,6 +542,9 @@
           <property name="spacing">
            <number>0</number>
           </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
           <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
@@ -530,7 +555,7 @@
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>70</width>
+              <width>80</width>
               <height>20</height>
              </size>
             </property>
@@ -542,7 +567,7 @@
              <bool>false</bool>
             </property>
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -567,6 +592,9 @@
             </property>
             <property name="text">
              <string>Побудувати графік</string>
+            </property>
+            <property name="default">
+             <bool>false</bool>
             </property>
             <property name="flat">
              <bool>false</bool>
@@ -612,6 +640,13 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>MyListWidget</class>
+   <extends>QWidget</extends>
+   <header>mylistwidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="res.qrc"/>
  </resources>

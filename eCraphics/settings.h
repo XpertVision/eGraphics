@@ -2,7 +2,6 @@
 #define SETTINGS_H
 
 #include "headers.h"
-#include <QDialog>
 
 namespace Ui {
 class Settings;
@@ -14,14 +13,25 @@ class Settings : public QDialog
 
 public:
     explicit Settings(QWidget *parent = 0);
-    void AddThemePic(QGraphicsView*, QString);
     ~Settings();
 
 private:
     Ui::Settings *ui;
-    void PointTheme();
+
+    void AddThemePic(QGraphicsView*, QString);
+
+    void SetLang();
+    void SetTheme();
+    void SetCharts();
+    void SetSizeState();
+    void SetSettingsFromConfig();
+
+    void GetFromLang();
+    void GetFromTheme();
+    void GetFromCharts();
+    void GetSizeState();
+    void GetSettingsToConfig();
 public slots:
-    void ChangeTheme();
 };
 
 #endif // SETTINGS_H

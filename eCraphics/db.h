@@ -10,33 +10,34 @@ private:
     QSqlDatabase dataBase;
     QStringList resultList;
 
+    QStringList queryList;
+
     bool connectResult;
 
     int mode;
-    //QStringList queryResult;
+
+    QStringList CustomQuery(const QString&, int);
 public:
     DB();
 
-    bool Connect();
-    QStringList Query(const QString&, const QString&);
-    bool GetConnectResult();
-    QStringList CustomQuery(const QString&, int);
-
     QSqlDatabase* GetSqlDB();
 
-    ~DB();
-
-    QString param, table, queryStr;
-    QStringList queryResult;
-
-    QString error;
-
+    bool Connect();
+    bool GetConnectResult();
     void SetMode(int);
-private slots:
+
+    void SetQueryList(QStringList);
+
+    QString param, table, queryStr;//!!!!!
+    QStringList queryResult;//!!!!!
+
+    QString error;//!!!!!!
+
+    ~DB();
+public slots:
     void StartConnect();
-    void StartQuery();
-    void StartQuery2();
     void StartCustomQuery();
+    void StartCustomMultQuery();
 signals:
     void ConnectFinish();
     void QueryFinish();

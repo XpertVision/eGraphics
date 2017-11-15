@@ -34,7 +34,13 @@
 		h0Nw9Afz+fKsA2y7AKl0CY2OlTLw9FwMnQAwKTmZlqYG4u0AbuRNCo9+54UX7A8avme3tS1koeAczT1zaIAIzGX8e7jt/At5Q4CyMhqZGY2ZNphpz2keEwOQHDPymgKMC8U0jaAJR6fPHQOAwMB8Ylaz8KmpArO
 		tiPz+Yj8/Bs5AYDS7B7qPbpAE2TZHJoO7bV174AHILqCQaWn55QBgDMAYKXpgO7lnYkEwIpCUEKUlqbwGgIcKXteffLzV9Y2vrYBlJ+YMAm5dk7Fexm0cz6sl9mk5/vC/w5/1APz/AIVSKKaOOgeTAAAAAElFTk
 		SuQmCC">
-			<project caption="Альфа-Банк" db="tAlfaBank" type="outbound"/>	
+			<project caption="Альфа-Банк" db="tAlfaBank" type="outbound">	
+				<list name="cryteria">
+					<listItem caption="Проконсультований1" field="consult1"/>
+					<listItem caption="Проконсультований2" field="consult2"/>
+					<listItem caption="Проконсультований3" field="consult3"/>
+				</list>
+			</project>
 			<project caption="Альфа-Банк (Холодные)" db="tAlfaBank_Holodnye" type="outbound"/>
 			<project caption="Альфа-Банк (Входящие)" db="tAlfaBank_Holodnye_Inb" type="inbound"/>
 		</icon>
@@ -463,7 +469,12 @@ ByIITIBwASDJIaijQEhIhGIOb7gjl0gCOm/q4ocP5H4vkHKL0RBBCIwzSQ5jAB4HwBXoyaPsWAQ+wbfQ
 		QaFgzzHh7f0f/fLU/3yzbdXyqh9FE8Gh6up5qz/+3y9f+fKLuoc3P7oRNLQQRQlOrxOM1oi4mkQwMQIxIegZUQ3dv3bJvPrmrif2vHX0VbfDCSKpENJZcFoetEF/k8doLIDEaAAmiPjs4/Nbag+feOV3z2+ZImfI
 		1b7rodkTE6lPtm1dV/3EjjePCER37/z5M6Sx8Qm241rvyuGB0LKUJD5SUjmFN9hNyYHhqFdMJHp373rMeuiPJ7cee++z32sIhZG+EYz0jSAYGLtJJtQQ2C06hIND2L9v/+Ltv/qnDTajrr/uYp2pyGM+cK2u3lZ1
 		W8XFx55ct3Xnvz37kwceXIwin+G9nuu91UaDaz3A/SPN86XVt1b05Pv1B5qvd7IsIbEje3fe+u7+Q2WtrS2eacV+2GwG2KyGGwB/GQCpMMikeII8mwAAAABJRU5ErkJggg==">
-			<project caption="ЖЄКи" db="tZheki" type="inbound"/>
+			<project caption="ЖЄКи" db="tZheki" type="inbound">
+				<list name="cryteria">
+					<listItem caption="Місто" field="City"/>
+					<listItem caption="Дата дзвінка" field="CallDate" type="date"/>
+				</list>
+			</project>
 		</icon>
 	</projectGroup>
 	<!--Quelle-->
@@ -591,6 +602,24 @@ ByIITIBwASDJIaijQEhIhGIOb7gjl0gCOm/q4ocP5H4vkHKL0RBBCIwzSQ5jAB4HwBXoyaPsWAQ+wbfQ
 		aIe1SxOsvbyFZbMTkZvGHE04eKzEO91FNnYHBBlgml9tx+umIgCGFeuPDwHJqlBVr4QGAqA/hBRcfK7PlTM0i6f5dKU8N5rlDT/3Gb4/Zug5GsIAMMmHVirZXhFcP6KNKJ7vfQ7s0zQOtlrVj2jabadoIbBgLcSi
 		j6G4DQkNbcr9bxuGkHK5rSs5apOPUs8gqg24A5F0RREroydjDSQVpDyQBgyonf9Mjb8bJ2NHeVDbwbv//wEAJdm+Zx/1aswAAAAASUVORK5CYII=">
 			<project caption="Oll.tv" db="tOllTv" type="outbound"/>
+		</icon>
+	</projectGroup>
+	<!--OttoGroup-->
+	<projectGroup>
+		<icon data="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">
+			<project caption="OttoGroup" db="tOttoGroup" type="outbound"/>
 		</icon>
 	</projectGroup>
 	<!--Покупон-->

@@ -20,7 +20,10 @@ SOURCES += main.cpp\
     update.cpp \
     myconfig.cpp \
     mylogger.cpp \
-    settings.cpp
+    settings.cpp \
+    changelist.cpp \
+    mylistwidget.cpp \
+    myuithreadblocker.cpp
 
 HEADERS  += mainwnd.h \
     db.h \
@@ -30,10 +33,14 @@ HEADERS  += mainwnd.h \
     update.h \
     myconfig.h \
     mylogger.h \
-    settings.h
+    settings.h \
+    changelist.h \
+    mylistwidget.h \
+    myuithreadblocker.h
 
 FORMS    += mainwnd.ui \
-    settings.ui
+    settings.ui \
+    changelist.ui
 
 RESOURCES += res.qrc
 

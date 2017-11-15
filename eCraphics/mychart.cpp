@@ -3,11 +3,8 @@
 MyChartClassic::MyChartClassic()
 {
     pChart = new QtCharts::QChart();
-
     pAxisX = new QtCharts::QDateTimeAxis;
-
     pAxisY = new QtCharts::QValueAxis;
-
     pChartWidget = new QtCharts::QChartView(pChart);
 }
 
@@ -44,6 +41,9 @@ void MyChartClassic::SetValueAxis(int count, float minRange, float maxRange)
 bool MyChartClassic::SetChart(const QVector<QPair<QDateTime, float>*> *pDataVector, const QStringList *pOperatorsName)
 {
     SetChartView();
+
+    if(pSeries != nullptr)
+        delete[] pSeries;
 
     pSeries = new QtCharts::QLineSeries[pOperatorsName->count()];
 
@@ -83,7 +83,7 @@ void MyChartClassic::SetChartView()
 {
     pChartWidget->setRenderHint(QPainter::Antialiasing);
     pChart->setAnimationOptions(QChart::AllAnimations);
-    pChart->setTheme(static_cast<QChart::ChartTheme>(chartTheme)); //!!!!!!!! enable choose
+    pChart->setTheme(static_cast<QChart::ChartTheme>(MyConfig::GetConfigure().themID)); //!!!!!!!! enable choose
 }
 
 QtCharts::QChartView* MyChartClassic::GetChartWidget()
@@ -91,15 +91,18 @@ QtCharts::QChartView* MyChartClassic::GetChartWidget()
     return pChartWidget;
 }
 
+int MyChartClassic::GetChartLen(int daysCount)
+{
+    return this->chartStep * daysCount;
+}
+
 MyChartClassic::~MyChartClassic()
 {
+    delete[] this->pSeries;
     delete this->pAxisY;
-
     delete this->pAxisX;
-
-    //delete this->pChartWidget;
-
-    //delete this->pChart;
+    //delete this->pChart;//pChartWidget delet this memory too;
+    delete this->pChartWidget;
 }
 
 /***************************************************************************************/
@@ -121,6 +124,8 @@ bool MyChartBar::SetChart(const QVector<QPair<QDateTime, float>*> *pDataVector, 
 
     QVector<QtCharts::QBarSet*> vectorOperators;
 
+    this->operatorsCount = pOperatorsName->count();
+
     for(int i = 0; i < pOperatorsName->count(); i++)
     {
         vectorOperators += new QtCharts::QBarSet(pOperatorsName->at(i));
@@ -139,9 +144,11 @@ bool MyChartBar::SetChart(const QVector<QPair<QDateTime, float>*> *pDataVector, 
     pChart->addSeries(pSeries);
 
     pCategoryAxis->append(date);
+    pCategoryAxis->setTitleText("Дата");
 
     pChart->createDefaultAxes();
     pChart->setAxisX(pCategoryAxis, pSeries);
+    pChart->axisY()->setTitleText("Кількість дзвінків");
 
     return true;
 }
@@ -150,7 +157,7 @@ void MyChartBar::SetChartView()
 {
     pChartWidget->setRenderHint(QPainter::Antialiasing);
     pChart->setAnimationOptions(QChart::AllAnimations); //!!!!!!!!! enable choose
-    pChart->setTheme(static_cast<QChart::ChartTheme>(chartTheme)); //!!!!!!!! enable choose
+    pChart->setTheme(static_cast<QChart::ChartTheme>(MyConfig::GetConfigure().themID)); //!!!!!!!! enable choose
 }
 
 QtCharts::QChartView* MyChartBar::GetChartWidget()
@@ -158,105 +165,22 @@ QtCharts::QChartView* MyChartBar::GetChartWidget()
     return pChartWidget;
 }
 
+int MyChartBar::GetChartLen(int daysCount)
+{
+    int chartBlock = this->chartStep * this->operatorsCount;
+
+    if(chartBlock < 100)
+        return 100 * daysCount;
+    else
+        return chartBlock * daysCount;
+}
+
 MyChartBar::~MyChartBar()
 {
-    //delete this->pAxisY;
-
-    //delete this->pAxisX;
-
-    //delete this->pChartWidget;
-
-    //delete this->pChart;
+    delete pCategoryAxis;
+    delete pSeries;
+    //delete pChart;//pChartWidget delet this memory too;
+    delete pChartWidget;
 }
 
 /***************************************************************************************/
-
-/*MyChart::MyChart()
-{
-    pChart = new QtCharts::QChart();
-
-    pAxisX = new QtCharts::QDateTimeAxis;
-
-    pAxisY = new QtCharts::QValueAxis;
-
-    pChartWidget = new QtCharts::QChartView(pChart);
-}
-
-void MyChart::SetDateAxis(int count)
-{
-    pAxisX->setTickCount(pSeries[0].count());
-    pAxisX->setFormat("yy/MM/dd");
-    pAxisX->setTitleText("Дата");
-    pChart->addAxis(pAxisX, Qt::AlignBottom);
-
-    for(int i = 0; i < count; i++)
-        pSeries[i].attachAxis(pAxisX);
-}
-
-void MyChart::SetValueAxis(int count, float minRange, float maxRange)
-{
-    pAxisY->setTitleText("Кількість дзвінків");
-    pAxisY->setLabelFormat("%i");
-
-    if(maxRange <= 29)
-        pAxisY->setTickCount(maxRange);
-    else
-        pAxisY->setTickCount(29);
-
-    pAxisY->setMin(minRange);
-    pAxisY->setMax(maxRange);
-
-    pChart->addAxis(pAxisY, Qt::AlignLeft);
-
-    for(int i = 0; i < count; i++)
-        pSeries[i].attachAxis(pAxisY);
-}
-
-bool MyChart::SetChart(const QVector<QPair<QDateTime, float>*> *pDataVector, const QStringList *pOperatorsName, float minRange, float maxRange)
-{
-    SetChartView();
-
-    pSeries = new QtCharts::QLineSeries[pOperatorsName->count()];
-
-    for(int i = 0; i < pOperatorsName->count(); i++)
-    {
-        for(int j = 0; j < pDataVector[i].count(); j++)
-        {
-            QDateTime xDate = pDataVector[i].at(j)->first;
-            float yValue = pDataVector[i].at(j)->second;
-
-            pSeries[i].append(xDate.toMSecsSinceEpoch(), yValue);
-        }
-
-        pSeries[i].setName(pOperatorsName->at(i));
-    }
-
-    for(int i = 0; i < pOperatorsName->count(); i++)
-        pChart->addSeries(&pSeries[i]);
-
-    SetValueAxis(pOperatorsName->count(), minRange, maxRange);
-    SetDateAxis(pOperatorsName->count());
-
-    return true;
-}
-
-void MyChart::SetChartView()
-{
-    pChartWidget->setRenderHint(QPainter::Antialiasing);
-}
-
-QtCharts::QChartView* MyChart::GetChartWidget()
-{
-    return pChartWidget;
-}
-
-MyChart::~MyChart()
-{
-    delete this->pAxisY;
-
-    delete this->pAxisX;
-
-    //delete this->pChartWidget;
-
-    //delete this->pChart;
-}*/

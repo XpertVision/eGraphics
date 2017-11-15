@@ -1,12 +1,6 @@
 #include "db.h"
 
-DB::DB()
-{
-    //pDataBase = new QSqlDatabase;
-
-    param = "DISTINCT Owner";
-    table = "tAlfaBank";
-}
+DB::DB(){}
 
 bool DB::Connect()
 {
@@ -22,41 +16,26 @@ QSqlDatabase* DB::GetSqlDB()
     return &dataBase;
 }
 
-QStringList DB::Query(const QString &selectParam, const QString &tableWhere)
+void DB::SetQueryList(QStringList list)
 {
-   QSqlQuery *query = new QSqlQuery();
-
-   query->exec("USE CallCenter SELECT " + selectParam + " FROM " + tableWhere);
-   ToLog("Execute query: " + query->lastQuery());
-
-   if(!resultList.empty())
-       resultList.clear();
-
-   while(query->next())
-   {
-       QString result = query->value(0).toString();
-       resultList.append(result);
-   }
-
-   delete query;
-
-   return resultList;
+    this->queryList.clear();
+    this->queryList = list;
 }
 
 QStringList DB::CustomQuery(const QString &queryStr, int mode = 0)
 {
     QSqlQuery *query = new QSqlQuery();
     query->exec(queryStr);
-    ToLog("Execute query: " + query->lastQuery());
-
-    if(query->lastError().text() != " ")
-    {
-        ToLog(query->lastError().text());
-        return this->resultList;
-    }
+    MyLogger::ToLog("Execute query: " + query->lastQuery());
 
     if(!resultList.empty())
         resultList.clear();
+
+    if(query->lastError().text() != " ")
+    {
+        MyLogger::ToLog(query->lastError().text());
+        return this->resultList;
+    }
 
     if(mode == 0)
     {
@@ -100,23 +79,19 @@ void DB::StartConnect()
     emit ConnectFinish();
 }
 
-void DB::StartQuery()
-{
-     queryResult = Query("DISTINCT Owner", "t" + table + param);
-     moveToThread(QApplication::instance()->thread());
-     emit QueryFinish();
-}
-
-void DB::StartQuery2()
-{
-     queryResult = Query("DISTINCT Result", "t" + table + param);
-     moveToThread(QApplication::instance()->thread());
-     emit QueryFinish();
-}
-
 void DB::StartCustomQuery()
 {
     queryResult = CustomQuery(queryStr, mode);
+    moveToThread(QApplication::instance()->thread());
+    emit QueryFinish();
+}
+
+void DB::StartCustomMultQuery()
+{
+    queryResult.clear();
+    for(int i = 0; i < this->queryList.count(); i++)
+        queryResult += CustomQuery(queryList.at(i), mode);
+
     moveToThread(QApplication::instance()->thread());
     emit QueryFinish();
 }

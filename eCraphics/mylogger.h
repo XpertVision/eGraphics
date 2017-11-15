@@ -2,7 +2,6 @@
 #define MYLOGGER_H
 
 #include "headers.h"
-#include <QObject>
 
 class MyLogger : public QObject
 {
@@ -29,19 +28,26 @@ private:
     static QString logFileName;
     static QString logFilePath;
 
-public:
-    void AddToLog(QString strToLog);
-
-    static MyLogger* GetInstance();
     static MyLogger* GetInstance(QString logFileName, QString logFilePath);
+    void AddToLog(QString strToLog);
+public:
+    static MyLogger* GetInstance();
+
+    static bool InitLog(QString logFileName, QString logFilePath)
+    {
+        if(MyLogger::GetInstance(logFileName, logFilePath) != nullptr)
+            return true;
+        else
+            return false;
+    }
+
+    static void ToLog(QString strToLog){ MyLogger::GetInstance()->AddToLog(strToLog); }
+
+    static void CloseLog(){ MyLogger::GetInstance()->~MyLogger(); }
 
     ~MyLogger();
 signals:
 public slots:
 };
-
-#define ToLog(a) MyLogger::GetInstance()->AddToLog(a)
-#define InitLog(a, b) MyLogger::GetInstance(a, b)
-#define CloseLog() MyLogger::GetInstance()->~MyLogger()
 
 #endif // MYLOGGER_H

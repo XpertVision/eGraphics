@@ -1,17 +1,15 @@
 #include "mainwnd.h"
 #include <QApplication>
 
-int chartTheme(0);
-
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    a.setWindowIcon(QIcon(":/MAIN_ICO"));
+    QApplication application(argc, argv);
+    application.setWindowIcon(QIcon(":/MAIN_ICO"));
 
-    MainWnd w;
+    MainWnd window;
 
-    w.show();
-    w.Start();
+    window.show();
+    window.Start();
 
-    return a.exec();
+    return application.exec();
 }

@@ -1,8 +1,9 @@
 #ifndef HEADERS_H
 #define HEADERS_H
 
+#include <QObject>
 #include <QMainWindow>
-
+#include <QListWidget>
 #include <QtCharts/QtCharts>
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QBarSet>
@@ -30,6 +31,14 @@
 
 #include <QtXml>
 
+#include <QMovie>
+
+//---------------------------------------------
+
+#include <memory>
+#include <utility>
+#include <exception>
+
 //---------------------------------------------
 
 #include <Windows.h>
@@ -38,7 +47,6 @@
 #pragma comment(lib, "Version.lib")
 
 //---------------------------------------------
-extern int chartTheme;
 
 #include "db.h"
 #include "mychart.h"
@@ -46,5 +54,9 @@ extern int chartTheme;
 #include "update.h"
 #include "mylogger.h"
 #include "settings.h"
+#include "myconfig.h"
+#include "changelist.h"
+#include "mylistwidget.h"
+#include "myuithreadblocker.h"
 
 #endif // HEADERS_H

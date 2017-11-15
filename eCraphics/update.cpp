@@ -3,10 +3,10 @@
 AppVersion MyUpdater::GetAppVersion(QString appPath)
 {
     AppVersion appVer;
-
+    MyLogger::ToLog("Program on server path: " + appPath);
     if(!QFile::exists(appPath))
     {
-        ToLog("Don't exist program on update server");
+        MyLogger::ToLog("Don't exist program on update server");
 
         appVer.first = -1;
 
@@ -147,7 +147,7 @@ bool MyUpdater::Update()
             }
         }
         else if(updateButtonClickId == QMessageBox::Button::No)
-            ToLog("Update to version: " + this->GetAppVersionToString(this->remoteApp) + " decline by user");
+            MyLogger::ToLog("Update to version: " + this->GetAppVersionToString(this->remoteApp) + " decline by user");
     }
     return false;
 }

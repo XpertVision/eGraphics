@@ -34,26 +34,30 @@ void MyXmlParser::ParseXml()
     QFile fileXml;
     QString icoData;
 
+    QVector<CryteriaData> cryteriaVector;
+
+    XmlProject *addProject = nullptr;
+
     if(!this->xmlFileName.isEmpty())
         fileXml.setFileName(this->xmlFileName);
     else
     {
         QMessageBox::warning(nullptr, "Помилка", "Не вказаний шлях до файлу проектів", QMessageBox::Ok);
-        ToLog("Don't set xml file name");
+        MyLogger::ToLog("Don't set xml file name");
         return;
     }
 
     if(!QFile::exists(this->xmlFileName))
     {
         QMessageBox::warning(nullptr, "Помилка", "Не вдалося знайти файл проектів", QMessageBox::Ok);
-        ToLog("XML file with projects doesn't exist");
+        MyLogger::ToLog("XML file with projects doesn't exist");
         return;
     }
 
     if(!fileXml.open(QFile::ReadOnly | QFile::Text))
     {
         QMessageBox::warning(nullptr, "Помилка", "Не вдалося відкрити файл проектів", QMessageBox::Ok);
-        ToLog("XML file with projects didn't opened");
+        MyLogger::ToLog("XML file with projects didn't open");
         return;
     }
 
@@ -61,36 +65,90 @@ void MyXmlParser::ParseXml()
 
     while(!this->xmlReader->atEnd())
     {
-        xmlReader->readNext();
-
-        if(xmlReader->isStartElement())
+        if(this->xmlReader->isStartElement())
         {
-            if(xmlReader->name() == "icon")
+            if(this->xmlReader->name().toString() == "projectGroup")
+                this->xmlReader->readNext();
+            else if(this->xmlReader->name().toString() == "icon")
             {
-                icoData = xmlReader->attributes().value("data").toString();
+                icoData = this->xmlReader->attributes().value("data").toString();
+                this->xmlReader->readNext();
             }
-            if(xmlReader->name() == "project")
+            else if(this->xmlReader->name().toString() == "project")
             {
-                XmlProject *addProject = new XmlProject;
-                addProject->caption = xmlReader->attributes().value("caption").toString();
-                addProject->db = xmlReader->attributes().value("db").toString();
-                addProject->type = xmlReader->attributes().value("type").toString();
+                addProject = new XmlProject;
+                addProject->caption = this->xmlReader->attributes().value("caption").toString();
+                addProject->db = this->xmlReader->attributes().value("db").toString();
+                addProject->type = this->xmlReader->attributes().value("type").toString();
                 addProject->ico = icoData;
 
-                this->projects.append(*addProject);
+                this->xmlReader->readNext();
             }
-        }
-        if(xmlReader->isEndElement())
-        {
-            if(xmlReader->name() == "icon")
+            else if(this->xmlReader->name().toString() == "list")
             {
-                icoData.clear();
+                if(this->xmlReader->attributes().value("name").toString() == "cryteria")
+                {
+                    do
+                    {
+                        this->xmlReader->readNext();
+                    }
+                    while(!this->xmlReader->isStartElement());
+
+                    bool isStartElem = this->xmlReader->isStartElement();
+
+                    while(isStartElem)
+                    {
+                        CryteriaData cryteria;
+
+                        cryteria.caption = this->xmlReader->attributes().value("caption").toString();
+                        cryteria.field   = this->xmlReader->attributes().value("field").toString();
+                        cryteria.type    = this->xmlReader->attributes().value("type").toString();
+
+                        cryteriaVector.append(cryteria);
+
+                        do
+                        {
+                            this->xmlReader->readNext();
+                        }
+                        while(!this->xmlReader->isStartElement() && (this->xmlReader->name().isEmpty() || this->xmlReader->name().toString() == "listItem"));
+
+                        if(this->xmlReader->name().toString() == "listItem")
+                            isStartElem = true;
+                        else
+                            isStartElem = false;
+                    }
+                }
             }
+            else
+                this->xmlReader->readNext();
+        }
+        else if(this->xmlReader->isEndElement())
+        {
+            if(this->xmlReader->name().toString() == "icon")
+                icoData.clear();
+            else if(this->xmlReader->name().toString() == "project")
+            {
+                this->projects.append(*addProject);
+                addProject = nullptr;
+            }
+            else if(this->xmlReader->name().toString() == "list")
+            {
+                addProject->cryteria = cryteriaVector;
+                cryteriaVector.clear();
+            }
+
+            this->xmlReader->readNext();
+        }
+        else
+        {
+            this->xmlReader->readNext();
         }
     }
 
     if(this->xmlReader->hasError())
-        ToLog("XML parsing error: " + this->xmlReader->errorString());
+        MyLogger::ToLog("XML parsing error: " + this->xmlReader->errorString());
+
+    fileXml.close();
 }
 
 MyXmlParser::~MyXmlParser()
