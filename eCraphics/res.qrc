@@ -21,5 +21,6 @@
         <file alias="TYPE_CLASSIC_IMG">ThemeImg/TYPE_CLASSIC_IMG.png</file>
         <file alias="EMPTY_ANIM">Animations/EMPTY_ANIM.gif</file>
         <file alias="EMPTY_ICON">additional_icons/EMPTY_ICON.png</file>
+        <file alias="NOTUSE_ANIM">Animations/NOTUSE_ANIM.gif</file>
     </qresource>
 </RCC>

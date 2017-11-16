@@ -193,7 +193,7 @@ void MainWnd::SelectProject()
             if(db->queryResult.count() == 0)
             {
                 ui->BaseList->setDisabled(true);
-                ui->BaseList->ShowListEmpty(":/EMPTY_ICON", 0);
+                ui->BaseList->ShowListEmpty(":/NOTUSE_ANIM", 1);
 
                 return;
             }
@@ -209,6 +209,7 @@ void MainWnd::SelectProject()
             ui->BaseList->clear();
             //ui->BaseList->setDisabled(true);
             ui->BaseList->SetDisabledWithReset(true);
+            ui->BaseList->ShowListEmpty(":/NOTUSE_ANIM", 1);
             ui->SetBaseButton->setDisabled(true);
 
             SelectOperator();
@@ -250,7 +251,8 @@ void MainWnd::SelectOperator()
 
     if(db->queryResult.count() == 0)
     {
-        ui->OperatorList->ShowListEmpty(":/EMPTY_ICON", 0);
+        ui->OperatorList->SetDisabledWithReset(true);
+        ui->OperatorList->ShowListEmpty(":/EMPTY_ANIM", 1);
         return;
     }
 
@@ -310,6 +312,13 @@ void MainWnd::SelectParam()
 
         myUIThreadBlockerQuery uiBlockQuery(db, "Інформація", "Зачекайте. Йде обробка запиту.");
         uiBlockQuery.Start();
+
+        if(db->queryResult.count() == 0)
+        {
+            ui->ParamList->SetDisabledWithReset(true);
+            ui->ParamList->ShowListEmpty(":/EMPTY_ANIM", 1);
+            return;
+        }
 
         queryResult = db->queryResult;
         queryResult.insert(0, "Виділити усі");

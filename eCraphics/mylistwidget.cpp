@@ -85,9 +85,13 @@ void MyListWidget::CheckedList(QListWidgetItem* item)
 
 void MyListWidget::ShowListEmpty(QString animation, int loopCount)
 {
+    QImage img(animation);
+    picProportional = static_cast<float>(img.height()) / static_cast<float>(img.width());
+
+
     QPalette tmpPalette = this->palette();
     this->defaultDisbledColor = tmpPalette.color(QPalette::Disabled, QPalette::Base);
-    tmpPalette.setColor(QPalette::Disabled, QPalette::Base, Qt::white);
+    tmpPalette.setColor(QPalette::Disabled, QPalette::Base, img.pixelColor(0, 0)/*Qt::white*/);
     this->setPalette(tmpPalette);
 
     if(this->movie != nullptr)
@@ -95,8 +99,6 @@ void MyListWidget::ShowListEmpty(QString animation, int loopCount)
     if(this->movieBackground != nullptr)
         delete this->movieBackground;
 
-    QImage img(animation);
-    picProportional = static_cast<float>(img.height()) / static_cast<float>(img.width());
 
     this->movieBackground = new QLabel(this);
     this->movieBackground->setGeometry(1, 1, this->width() - 2, this->height() -2);
@@ -193,6 +195,7 @@ void MyListWidget::SetEnabledWithReset(bool flag)
 
 void MyListWidget::SetDisabledWithReset(bool flag)
 {
+    this->clear();
     this->setDisabled(flag);
 
     if(flag)
