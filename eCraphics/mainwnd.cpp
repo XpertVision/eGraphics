@@ -155,10 +155,12 @@ void MainWnd::SelectProject()
     ui->ParamCombo->setDisabled(true);
 
     ui->OperatorList->clear();
-    ui->OperatorList->setDisabled(true);
+    //ui->OperatorList->setDisabled(true);
+    ui->OperatorList->SetDisabledWithReset(true);
 
     ui->ParamList->clear();
-    ui->ParamList->setDisabled(true);
+    //ui->ParamList->setDisabled(true);
+    ui->ParamList->SetDisabledWithReset(true);
 
     ui->SetBaseButton->setDisabled(true);
     ui->SetOperatorButton->setDisabled(true);
@@ -173,7 +175,8 @@ void MainWnd::SelectProject()
     if(project == "")
     {
         ui->BaseList->clear();
-        ui->BaseList->setDisabled(true);
+        //ui->BaseList->setDisabled(true);
+        ui->BaseList->SetDisabledWithReset(true);
     }
     else
     {
@@ -192,8 +195,9 @@ void MainWnd::SelectProject()
 
             if(db->queryResult.count() == 0)
             {
-                ui->BaseList->setDisabled(true);
-                ui->BaseList->ShowListEmpty(":/NOTUSE_ANIM", 1);
+                //ui->BaseList->setDisabled(true);
+                ui->BaseList->SetDisabledWithReset(true);
+                ui->BaseList->ShowListEmpty(":/EMPTY_ANIM", 1);
 
                 return;
             }
@@ -219,7 +223,7 @@ void MainWnd::SelectProject()
 
 void MainWnd::SelectOperator()
 {
-    ui->OperatorList->setEnabled(true);
+    ui->OperatorList->SetDisabledWithReset(true);
 
     db->SetMode(0);
     db->table = this->dbTable;
@@ -251,11 +255,11 @@ void MainWnd::SelectOperator()
 
     if(db->queryResult.count() == 0)
     {
-        ui->OperatorList->SetDisabledWithReset(true);
         ui->OperatorList->ShowListEmpty(":/EMPTY_ANIM", 1);
         return;
     }
 
+    ui->OperatorList->setEnabled(true);
     queryResult = db->queryResult;
     queryResult.insert(0, "Виділити усі");
     queryResult.insert(1, "УСІ");
@@ -658,8 +662,8 @@ void MainWnd::SaveGraphic()
 
 void MainWnd::ParseProjects()
 {    
-    //this->myXml.SetXmlFileName("//10.1.56.88/Programs/eCall/Applications/eGraphics/Projects/Projects.xml");
-    this->myXml.SetXmlFileName("C:/Users/mbezu/Desktop/eg/Projects.xml");
+    this->myXml.SetXmlFileName("//10.1.56.88/Programs/eCall/Applications/eGraphics/Projects/Projects.xml");
+    //this->myXml.SetXmlFileName("C:/Users/mbezu/Desktop/eg/Projects.xml");
     this->myXml.ParseXml();
 
     this->parsedXmlProject = this->myXml.GetXmlProject();
