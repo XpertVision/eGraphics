@@ -315,6 +315,7 @@ void MainWnd::SelectParam()
         {
             ui->ParamList->SetDisabledWithReset(true);
             ui->ParamList->ShowListEmpty(":/EMPTY_ANIM");
+            ui->SetParamButton->setDisabled(true);
             return;
         }
 

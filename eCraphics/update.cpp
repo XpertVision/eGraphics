@@ -61,7 +61,7 @@ bool MyUpdater::NeedUpdate()
     }
     else if(this->thisApp.second != this->remoteApp.second)
     {
-        if(this->thisApp.first > this->remoteApp.first)
+        if(this->thisApp.second > this->remoteApp.second)
             this->rollBack = true;
         else
             this->rollBack = false;
@@ -70,7 +70,7 @@ bool MyUpdater::NeedUpdate()
     }
     else if(this->thisApp.third != this->remoteApp.third)
     {
-        if(this->thisApp.first > this->remoteApp.first)
+        if(this->thisApp.third > this->remoteApp.third)
             this->rollBack = true;
         else
             this->rollBack = false;
@@ -79,7 +79,7 @@ bool MyUpdater::NeedUpdate()
     }
     else if(this->thisApp.fourth != this->remoteApp.fourth)
     {
-        if(this->thisApp.first > this->remoteApp.first)
+        if(this->thisApp.fourth > this->remoteApp.fourth)
             this->rollBack = true;
         else
             this->rollBack = false;
