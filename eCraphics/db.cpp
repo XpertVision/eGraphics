@@ -5,8 +5,8 @@ DB::DB(){}
 bool DB::Connect()
 {
     dataBase = QSqlDatabase::addDatabase("QODBC3");
-    dataBase.setDatabaseName("Driver={SQL SERVER NATIVE CLIENT 11.0};Server=SQLSRV;Database=CallCenter;Uid=eGraphics;Pwd=EG!23456;");
-    //dataBase.setDatabaseName("Driver={SQL SERVER NATIVE CLIENT 11.0};Server=DISNEY\\SQLEXPRESS;Database=CallCenter;Uid=eGraphics;Pwd=EG!234567;");
+    //dataBase.setDatabaseName("Driver={SQL SERVER NATIVE CLIENT 11.0};Server=SQLSRV;Database=CallCenter;Uid=eGraphics;Pwd=EG!23456;");
+    dataBase.setDatabaseName("Driver={SQL SERVER NATIVE CLIENT 11.0};Server=DISNEY\\SQLEXPRESS;Database=CallCenter;Uid=eGraphics;Pwd=EG!234567;");
 
     return dataBase.open();
 }

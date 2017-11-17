@@ -155,14 +155,13 @@ void MainWnd::SelectProject()
     ui->ParamCombo->setDisabled(true);
 
     ui->OperatorList->clear();
-    //ui->OperatorList->setDisabled(true);
     ui->OperatorList->SetDisabledWithReset(true);
 
     ui->ParamList->clear();
-    //ui->ParamList->setDisabled(true);
     ui->ParamList->SetDisabledWithReset(true);
 
-    ui->SetBaseButton->setDisabled(true);
+    SetDisabledBaseBlock(false);
+
     ui->SetOperatorButton->setDisabled(true);
     ui->SetParamButton->setDisabled(true);
     ui->DrawGraphic->setDisabled(true);
@@ -175,7 +174,6 @@ void MainWnd::SelectProject()
     if(project == "")
     {
         ui->BaseList->clear();
-        //ui->BaseList->setDisabled(true);
         ui->BaseList->SetDisabledWithReset(true);
     }
     else
@@ -195,9 +193,9 @@ void MainWnd::SelectProject()
 
             if(db->queryResult.count() == 0)
             {
-                //ui->BaseList->setDisabled(true);
                 ui->BaseList->SetDisabledWithReset(true);
-                ui->BaseList->ShowListEmpty(":/EMPTY_ANIM", 1);
+                ui->BaseList->ShowListEmpty(":/EMPTY_ANIM");
+                ui->SetBaseButton->setDisabled(true);
 
                 return;
             }
@@ -210,11 +208,7 @@ void MainWnd::SelectProject()
         }
         else if(this->projectType == "inbound")
         {
-            ui->BaseList->clear();
-            //ui->BaseList->setDisabled(true);
-            ui->BaseList->SetDisabledWithReset(true);
-            ui->BaseList->ShowListEmpty(":/NOTUSE_ANIM", 1);
-            ui->SetBaseButton->setDisabled(true);
+            SetDisabledBaseBlock(true);
 
             SelectOperator();
         }
@@ -255,7 +249,7 @@ void MainWnd::SelectOperator()
 
     if(db->queryResult.count() == 0)
     {
-        ui->OperatorList->ShowListEmpty(":/EMPTY_ANIM", 1);
+        ui->OperatorList->ShowListEmpty(":/EMPTY_ANIM");
         return;
     }
 
@@ -320,15 +314,15 @@ void MainWnd::SelectParam()
         if(db->queryResult.count() == 0)
         {
             ui->ParamList->SetDisabledWithReset(true);
-            ui->ParamList->ShowListEmpty(":/EMPTY_ANIM", 1);
+            ui->ParamList->ShowListEmpty(":/EMPTY_ANIM");
             return;
         }
 
         queryResult = db->queryResult;
         queryResult.insert(0, "Виділити усі");
 
+        ui->ParamList->SetEnabledWithReset(true);
         SetList(queryResult, ui->ParamList);
-        ui->ParamList->setEnabled(true);
     }
     else
     {
@@ -662,8 +656,8 @@ void MainWnd::SaveGraphic()
 
 void MainWnd::ParseProjects()
 {    
-    this->myXml.SetXmlFileName("//10.1.56.88/Programs/eCall/Applications/eGraphics/Projects/Projects.xml");
-    //this->myXml.SetXmlFileName("C:/Users/mbezu/Desktop/eg/Projects.xml");
+    //this->myXml.SetXmlFileName("//10.1.56.88/Programs/eCall/Applications/eGraphics/Projects/Projects.xml");
+    this->myXml.SetXmlFileName("C:/Users/mbezu/Desktop/eg/Projects.xml");
     this->myXml.ParseXml();
 
     this->parsedXmlProject = this->myXml.GetXmlProject();
@@ -685,11 +679,21 @@ void MainWnd::SetProjectParams()
             this->projectType = parsedXmlProject->at(i).type;
 
             this->cryteria.clear();
-            this->cryteria.append(CryteriaData{"Результат", "result", ""});
+            this->cryteria.append(CryteriaData{"Результат", "Result", ""});
             this->cryteria.append(parsedXmlProject->at(i).cryteria);
             break;
         }
     }
+}
+
+void MainWnd::SetDisabledBaseBlock(bool flag)
+{
+    ui->BaseIcon->setHidden(flag);
+    ui->BaseTitle->setHidden(flag);
+
+    ui->BaseList->setHidden(flag);
+
+    ui->SetBaseButton->setHidden(flag);
 }
 
 void MainWnd::OpenSettings()

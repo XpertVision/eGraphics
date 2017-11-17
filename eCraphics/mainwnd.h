@@ -73,6 +73,8 @@ private slots:
 
     void OpenSettings();
     void OpenChangeList();
+
+    void SetDisabledBaseBlock(bool);
 };
 
 #endif // MAINWND_H

@@ -19,7 +19,6 @@ AppVersion MyUpdater::GetAppVersion(QString appPath)
     LPCWSTR szVersionFile;
 
     szVersionFile = appPath.toStdWString().c_str();
-    //szVersionFile = L"E:/eGraphics.exe";
     DWORD  verSize   = GetFileVersionInfoSize( szVersionFile, &verHandle);
 
     if (verSize != NULL)

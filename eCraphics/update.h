@@ -20,8 +20,8 @@ private:
     bool rollBack;
 
     QString thisAppPath = "eGraphics.exe";
-    QString remoteAppPath = "//10.1.56.88/Programs/eCall/Applications/eGraphics/eGraphics/eGraphics.exe";
-    //QString remoteAppPath = "E:/eGraphics.exe";
+    //QString remoteAppPath = "//10.1.56.88/Programs/eCall/Applications/eGraphics/eGraphics/eGraphics.exe";
+    QString remoteAppPath = "E:/eGraphics.exe";
 
     AppVersion GetAppVersion(QString);
     bool NeedUpdate();
