@@ -44,8 +44,10 @@ MainWnd::MainWnd(QWidget *parent) :
     connect(ui->DrawGraphic, &QPushButton::clicked, this, &MainWnd::DrawGraphic);
 
     //
+    ui->MainToolBar->addAction(QIcon(":/LOGON_ICO"), "Авторизуватися", this, &MainWnd::OpenAuthorization);
+
     ui->MainToolBar->addAction(QIcon(":/SAVE_ICO"), "Зберегти", this, &MainWnd::SaveGraphic);
-    ui->MainToolBar->actions().at(0)->setDisabled(true);
+    ui->MainToolBar->actions().at(1)->setDisabled(true);
 
     ui->MainToolBar->addAction(QIcon(":/SETTINGS_ICO"), "Налаштування", this, &MainWnd::OpenSettings);
     ui->MainToolBar->addAction(QIcon(":/UPDATELIST_ICO"), "Список змін", this, &MainWnd::OpenChangeList);
@@ -66,6 +68,7 @@ void MainWnd::Start()
         MyLogger::ToLog("Start update");
         QProcess::startDetached("eGraphics.exe");
         MyLogger::ToLog("End update");
+
         exit(0);
     }
 
@@ -700,6 +703,17 @@ void MainWnd::SetDisabledBaseBlock(bool flag)
 void MainWnd::OpenSettings()
 {
     Settings* pSettingsWnd = new Settings(this);
+
+    pSettingsWnd->show();
+    pSettingsWnd->exec();
+
+    delete pSettingsWnd;
+}
+
+
+void MainWnd::OpenAuthorization()
+{
+    authorization* pSettingsWnd = new authorization(this);
 
     pSettingsWnd->show();
     pSettingsWnd->exec();

@@ -15,35 +15,51 @@ AppVersion MyUpdater::GetAppVersion(QString appPath)
 
     DWORD  verHandle = 0;
     UINT   size      = 0;
-    LPBYTE lpBuffer  = NULL;
+    LPVOID lpBuffer  = NULL;
     LPCWSTR szVersionFile;
 
     szVersionFile = appPath.toStdWString().c_str();
-    DWORD  verSize   = GetFileVersionInfoSize( szVersionFile, &verHandle);
+    //DWORD  verSize   = GetFileVersionInfoSize(szVersionFile, &verHandle);GetFileV
+    DWORD verSize = GetFileVersionInfoSizeW(szVersionFile, &verHandle);
 
-    if (verSize != NULL)
+    qDebug() << appPath.toStdString().c_str() << ":::" << verSize;
+
+
+    if (verSize)
     {
-        LPSTR verData = new char[verSize];
+        qDebug() << "~1";
+        LPWSTR verData = new wchar_t[verSize];
 
-        if (GetFileVersionInfo( szVersionFile, verHandle, verSize, verData))
+        if (GetFileVersionInfoW(szVersionFile, verHandle, verSize, verData)/*GetFileVersionInfo(szVersionFile, verHandle, verSize, verData)*/)
         {
-            if (VerQueryValue(verData,L"\\",(VOID FAR* FAR*)&lpBuffer,&size))
+            qDebug() << "~2";
+            if (VerQueryValueW(verData, L"\\", /*(VOID FAR* FAR*)*/&lpBuffer, &size))
             {
+                qDebug() << "~3";
                 if (size)
                 {
+                    qDebug() << "~4";
                     VS_FIXEDFILEINFO *verInfo = (VS_FIXEDFILEINFO *)lpBuffer;
                     if (verInfo->dwSignature == 0xfeef04bd)
                     {
                         appVer.first = ((verInfo->dwFileVersionMS >> 16) & 0xffff);
+                        qDebug() << appVer.first;
                         appVer.second = ((verInfo->dwFileVersionMS >>  0) & 0xffff);
+                        qDebug() << appVer.second;
                         appVer.third = ((verInfo->dwFileVersionLS >> 16) & 0xffff);
+                        qDebug() << appVer.third;
                         appVer.fourth = ((verInfo->dwFileVersionLS >>  0) & 0xffff);
+                        qDebug() << appVer.fourth;
                     }
                 }
             }
         }
         delete[] verData;
     }
+
+    qDebug() << "LAST ERROR: "<< GetLastError();
+
+    qDebug() << QApplication::applicationVersion();
 
     return appVer;
 }

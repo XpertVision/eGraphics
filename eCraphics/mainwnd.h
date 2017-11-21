@@ -73,6 +73,7 @@ private slots:
 
     void OpenSettings();
     void OpenChangeList();
+    void OpenAuthorization();
 
     void SetDisabledBaseBlock(bool);
 };

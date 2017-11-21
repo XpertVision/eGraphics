@@ -6,6 +6,8 @@ authorization::authorization(QWidget *parent) :
     ui(new Ui::authorization)
 {
     ui->setupUi(this);
+
+    setWindowFlags (windowFlags() & ~Qt::WindowContextHelpButtonHint);
 }
 
 authorization::~authorization()

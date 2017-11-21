@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     settings.cpp \
     changelist.cpp \
     mylistwidget.cpp \
-    myuithreadblocker.cpp
+    myuithreadblocker.cpp \
+    authorization.cpp
 
 HEADERS  += mainwnd.h \
     db.h \
@@ -36,11 +37,13 @@ HEADERS  += mainwnd.h \
     settings.h \
     changelist.h \
     mylistwidget.h \
-    myuithreadblocker.h
+    myuithreadblocker.h \
+    authorization.h
 
 FORMS    += mainwnd.ui \
     settings.ui \
-    changelist.ui
+    changelist.ui \
+    authorization.ui
 
 RESOURCES += res.qrc
 

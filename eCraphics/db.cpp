@@ -6,7 +6,7 @@ bool DB::Connect()
 {
     dataBase = QSqlDatabase::addDatabase("QODBC3");
     //dataBase.setDatabaseName("Driver={SQL SERVER NATIVE CLIENT 11.0};Server=SQLSRV;Database=CallCenter;Uid=eGraphics;Pwd=EG!23456;");
-    dataBase.setDatabaseName("Driver={SQL SERVER NATIVE CLIENT 11.0};Server=DISNEY\\SQLEXPRESS;Database=CallCenter;Uid=eGraphics;Pwd=EG!234567;");
+    dataBase.setDatabaseName("Driver={SQL SERVER NATIVE CLIENT 11.0};Server=DISNEY\\SQLEXPRESS;Uid=eGraphics;Pwd=EG!234567;Database=CallCenter;");//Database=CallCenter;
 
     return dataBase.open();
 }
@@ -25,6 +25,10 @@ void DB::SetQueryList(QStringList list)
 QStringList DB::CustomQuery(const QString &queryStr, int mode = 0)
 {
     QSqlQuery *query = new QSqlQuery();
+    /*qDebug() << this->dataBase.databaseName();
+    this->dataBase.setDatabaseName(this->dataBase.databaseName() + "Database=CallCenter;");
+    qDebug() << this->dataBase.databaseName();
+    this->dataBase.open();*/
     query->exec(queryStr);
     MyLogger::ToLog("Execute query: " + query->lastQuery());
 

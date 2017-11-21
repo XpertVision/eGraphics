@@ -45,6 +45,7 @@
 
 #pragma comment(lib, "psapi.lib")
 #pragma comment(lib, "Version.lib")
+#pragma comment(lib, "Mincore.lib")
 
 //---------------------------------------------
 
@@ -58,5 +59,6 @@
 #include "changelist.h"
 #include "mylistwidget.h"
 #include "myuithreadblocker.h"
+#include "authorization.h"
 
 #endif // HEADERS_H
